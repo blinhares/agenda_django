@@ -21,13 +21,8 @@ from django. contrib.auth.decorators import login_required
 
 @login_required(login_url='contact:login')
 def create(request:HttpRequest) -> HttpResponse:
-    #criando uma variavel que vem do html
-    #o comando busca a url do esdereco especifico
     form_action = reverse('contact:create')
-    # print('------------')
-    # print(form_action)
-    # print('------------')
-    
+   
     if request.method == 'POST':
         
         form = ContactForm(data=request.POST,
@@ -39,18 +34,10 @@ def create(request:HttpRequest) -> HttpResponse:
         }
 
         if form.is_valid():
-            #formulario valido
 
             contact = form.save(commit=False)
-            #adicionando owner a informacao
             contact.owner = request.user
-
             contact.save()
-            # #caso queira mudar algo no formulario enviado antes de 
-            # #enviar
-            # contact =  form.save(commit=False)
-            # contact.show = False
-            # contact.save()
 
             return redirect(
                 'contact:update',
@@ -76,7 +63,6 @@ def update(
         request:HttpRequest,
         contact_id:int) -> HttpResponse:
     
-    #recebendo obejto pelo ID recebido
     contact = get_object_or_404(
         Contact, 
         id=contact_id, 
@@ -87,7 +73,6 @@ def update(
         'contact:update',
         args=(contact_id,) 
                            )
-   
     
     if request.method == 'POST':
         #formulario com o contato enviado
@@ -103,14 +88,9 @@ def update(
         }
 
         if form.is_valid():
-            #formulario valido
 
             contact = form.save()
-            # #caso queira mudar algo no formulario enviado antes de 
-            # #enviar
-            # contact =  form.save(commit=False)
-            # contact.show = False
-            # contact.save()
+           
 
             return redirect(
                 'contact:update',
@@ -134,18 +114,14 @@ def update(
 def delete(request:HttpRequest,
            contact_id:int) -> HttpResponse:
     
-    #recebendo obejto pelo ID recebido
     single_contact = get_object_or_404(
         Contact, 
         id=contact_id, 
         show=True,
         owner=request.user)
-    #coletando confirmacao
     confirmation = request.\
         POST.\
         get('confirmation', 'no')
-    #o botao de confirmacao tem um iput hiden
-    #  no formulario
     if confirmation == 'yes':
         
         single_contact.delete()
@@ -158,8 +134,6 @@ def delete(request:HttpRequest,
 
     }
     
-    
-
     return render(
         request=request,
         context= context,

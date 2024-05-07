@@ -29,14 +29,6 @@ def register_user(request:HttpRequest) -> HttpResponse:
     
     form = RegisterForm()
 
-    #mandando msg essa msg precisa estar referenciada
-    # no html. Editar no base para ter msg em todas
-    # messages.info(request=request,
-    #               message='Uma msg qualquer')
-    
-
-
-
     if request.method == 'POST':
         form = RegisterForm(request.POST)
 

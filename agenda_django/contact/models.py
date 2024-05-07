@@ -5,20 +5,9 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 # Create your models here.
-#https://docs.djangoproject.com/en/5.0/topics/db/models/
 
-# id (primary key - automático)
-# first_name (string), last_name (string), phone (string)
-# email (email), created_date (date), description (text)
-
-# Depois
-# category (foreign key), show (boolean), owner (foreign key)
-# picture (imagem)
 class Category(models.Model):
     name = models.CharField( max_length = 50 )
-
-    ##para altera os dados do model
-    # https://docs.djangoproject.com/en/5.0/ref/models/options/
     class Meta:
         verbose_name = 'Categoria' #seta o nome padrao no singular
         verbose_name_plural = 'Categories' #seta o nome padroa no plural
@@ -34,11 +23,7 @@ class Contact(models.Model):
     created_date = models.DateTimeField( default = timezone.now ) #configura timezone no settings do projeto
     description = models.TextField(blank = True)
     show = models.BooleanField(default = True)
-    #salvara no diretorio configurado na variavel Media em settigns.py criando uma subpasta
-    # picture / ano / mes
     pictures = models.ImageField(blank=True, upload_to='picture/%Y/%M') 
-    #chave estrangeira
-    # on delete 'e o que sera realizado quando a categoria for apagado
     category = models.ForeignKey(Category, 
                                  on_delete = models.SET_NULL,
                                  blank = True,
@@ -51,7 +36,3 @@ class Contact(models.Model):
     def __str__(self) -> str:
         return f'{self.first_name} {self.last_name}'
 
-    
-    
-#sempre que mecher no model deve refazer as migracoes com os comandos
-# makemigrations e migrate para atualizar o banco de dados
