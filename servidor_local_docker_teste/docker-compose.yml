@@ -1,0 +1,16 @@
+
+services:
+  # ubuntu server
+  ubuntu_server:
+    build:
+      context: .
+    container_name: ubuntuserver
+    restart: always
+    command: ["sleep","infinity"] #para o caso do UbuntuServer
+    # volumes:
+    #   - sshd:/etc/ssh/
+    ports: 
+      - 8080:80 # Equivamente a -p 8080:80
+      - 7655:22
+    # network_mode: bridgeexit
+    

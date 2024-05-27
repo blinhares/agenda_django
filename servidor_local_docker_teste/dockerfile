@@ -1,0 +1,22 @@
+# Download base image ubuntu
+FROM ubuntu:latest
+
+# LABEL about the custom image
+LABEL maintainer="brunoLinhares"
+LABEL description="Imagem costomizada para servir de servidor"
+
+# Disable Prompt During Packages Installation
+# ARG DEBIAN_FRONTEND=noninteractive
+
+# Update the system, install OpenSSH Server, and set up users
+# RUN apt-get update && apt-get upgrade -y && \
+#     apt-get install -y openssh-server && \
+#     apt install net-tools
+
+
+    
+
+# Expose the SSH port
+EXPOSE 22 8080
+
+
